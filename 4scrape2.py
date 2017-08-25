@@ -1,4 +1,3 @@
-
 #python3
 import sys, bs4, requests, os
 
@@ -26,12 +25,14 @@ searchableMarkup = bs4.BeautifulSoup(markup.text,"lxml")
 
 # 1. Pull all image tags from HTML (DONE)
 allImages = searchableMarkup.select('img')
-print(allImages)
+#print(allImages)
+#print(allImages[0])
 
-# 2. Filter out ads/banners
+# 2. Filter out ads/banners(identify class/markup unique to unwanted images)
 
 #3. Check for existing scrape directory and create one if necessary to store files
 folder = os.path.expanduser('~/Pictures')
+
 #This line returns only immediate child folders of the 'Pictures' folder
 dir_list = next(os.walk(folder))[1]
 if '4scrape' not in str(dir_list):
@@ -43,3 +44,10 @@ if '4scrape' not in str(dir_list):
 		print("Directory already exists")
 print("This is a list of the directories under 'Pictures' " + str(dir_list))
 #4. Write images to disk
+
+#get the URl for each image pulled from the requested board
+for image in allImages:
+#the [2:] removes the // that prepends image files on 4chan's web server
+	print(image.get('src')[2:]) 
+
+
